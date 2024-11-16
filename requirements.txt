@@ -1,5 +1,12 @@
 pyspark
 findspark
+py4j
+scikit-learn
+numpy
 pandas
+scipy
+matplotlib
+seaborn
 jupyter
-spark-excel
+notebook
+ipython
