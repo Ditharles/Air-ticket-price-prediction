@@ -1,0 +1,87 @@
+# Use the latest Python 3.11 image
+FROM python:3.11-slim
+
+# Install necessary system dependencies
+RUN apt-get update --fix-missing && apt-get install -y --no-install-recommends \
+    openjdk-17-jdk \
+    unzip \
+    xvfb \
+    x11vnc \
+    xauth \
+    wget \
+    gnupg \
+    ca-certificates \
+    curl \
+    xvfb \
+    libglib2.0-0 \
+    libnss3 \
+    libnspr4 \
+    libatk1.0-0 \
+    libatk-bridge2.0-0 \
+    libcups2 \
+    libdrm2 \
+    libxkbcommon0 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxext6 \
+    libxfixes3 \
+    libxi6 \
+    libxrandr2 \
+    libxrender1 \
+    libxtst6 \
+    libwayland-client0 \
+    libwayland-server0 \
+    libgbm1 \
+    libasound2 \
+    && apt-get clean
+
+# Set JAVA_HOME and update PATH
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+ENV PATH=$JAVA_HOME/bin:$PATH
+
+# Set environment variables for PySpark
+ENV SPARK_HOME=/opt/spark
+ENV PATH=$PATH:$SPARK_HOME/bin
+ENV SPARK_VERSION=3.4.0
+ENV HADOOP_VERSION=3
+
+
+
+# Download and install Apache Spark
+RUN curl -O https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz && \
+    tar -xvf spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz && \
+    mv spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION} /opt/spark && \
+    rm spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz
+# Install Chrome and Chromium dependencies
+
+
+# Install Chrome and Chromium dependencies
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+    && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
+    && apt-get update \
+    && apt-get install -y google-chrome-stable \
+    && rm -rf /var/lib/apt/lists/*
+
+# Upgrade pip to the latest version
+RUN pip install --no-cache-dir --upgrade pip
+
+# Install Playwright and browser dependencies
+RUN pip install playwright \
+    && playwright install-deps \
+    && playwright install
+
+# Installer les requirements
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Set up the working directory
+WORKDIR /app
+
+# Expose ports for Jupyter and potential Spark UI
+EXPOSE 8888 4040
+
+# Create a volume for the working directory
+VOLUME /app
+
+# Launch Jupyter Notebook
+CMD ["jupyter", "notebook", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
