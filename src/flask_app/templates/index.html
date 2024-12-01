@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Price Prediction</title>
+
+    <!-- CSS Styles -->
+    <style>
+        /* Reset default styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 400px;
+            max-width: 90%;
+            transition: all 0.3s ease;
+        }
+
+        .container:hover {
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 8px;
+            display: block;
+            animation: fadeIn 1s ease-out;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            animation: fadeIn 1s ease-out;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #333;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .error {
+            color: red;
+            font-size: 1rem;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* Animation for fade-in effect */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Responsive design for mobile */
+        @media (max-width: 600px) {
+            .container {
+                width: 100%;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            input[type="text"], input[type="submit"] {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+
+    <script>
+        // JavaScript to hide result after 10 seconds
+        function hideResult() {
+            setTimeout(function() {
+                document.getElementById('result').style.display = 'none';
+            }, 10000); // 10 seconds
+        }
+
+        // Call hideResult if there's a result to show
+        window.onload = function() {
+            if (document.getElementById('result')) {
+                hideResult();
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Flight Price Prediction</h1>
+        
+        <form method="POST">
+            <label for="airlines">Airlines:</label>
+            <input type="text" id="airlines" name="airlines" placeholder="Enter Airlines"><br>
+
+            <label for="stops">Total Stops:</label>
+            <input type="text" id="stops" name="stops" placeholder="Enter Total Stops"><br>
+
+            <label for="destination">Destination:</label>
+            <input type="text" id="destination" name="destination" placeholder="Enter Destination"><br>
+
+            <label for="duration">Duration (in minutes):</label>
+            <input type="text" id="duration" name="duration" placeholder="Enter Duration"><br>
+
+            <label for="date">Date (YYYY-MM-DD):</label>
+            <input type="text" id="date" name="date" placeholder="Enter Date"><br>
+
+            <input type="submit" value="Predict">
+        </form>
+
+        {% if result is not none %}
+            <div class="result" id="result">
+                <h2>Predicted Price: ${{ result }}</h2>
+            </div>
+        {% endif %}
+
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>

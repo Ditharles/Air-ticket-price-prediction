@@ -1,12 +1,16 @@
-pyspark
-findspark
-py4j
-scikit-learn
-numpy
-pandas
-scipy
-matplotlib
-seaborn
-jupyter
-notebook
-ipython
+pyspark==3.4.1
+findspark==2.0.1
+py4j==0.10.9.7
+scikit-learn==1.2.2
+numpy==1.24.3
+pandas==2.0.1
+scipy==1.10.1
+matplotlib==3.7.1
+seaborn==0.12.2
+jupyter==1.0.0
+#For scrapping
+# # selenium
+# beautifulsoup4==4.12.2
+# # webdriver-manager
+# playwright
+flask
