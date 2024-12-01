@@ -136,32 +136,13 @@ Si vous souhaitez exécuter le projet sans Docker, voici les étapes à suivre :
 
 ---
 
-## Déploiement
-
-### Pour un environnement de production :
-
-- Utilisez un serveur WSGI tel que **Gunicorn** ou **uWSGI**.
-- Configurez un serveur proxy (par exemple, **Nginx** ou **Apache**) pour gérer les requêtes HTTP.
-- Configurez des volumes persistants pour les données critiques.
-
----
 
 ## Structure des branches (optionnel)
 
 Si vous utilisez un système de gestion de versions tel que Git, suivez cette organisation :
 
 - **`main`** : Contient le code stable en production.
-- **`develop`** : Contient le code en cours de développement.
-- **`feature/<feature_name>`** : Branches pour les nouvelles fonctionnalités.
-- **`bugfix/<issue_name>`** : Branches pour la résolution des bugs.
-
+- **`Ditharles`** : Contient le code en cours de développement.
 ---
-
-## Liens et Ressources supplémentaires
-
-- **Dossier projet sur le serveur** : `/app/projects`
-- **Documentation technique** : [Lien vers Confluence ou Wiki interne]
-- **Tableau de gestion des tâches** : [Lien vers Asana/Trello/Jira]
-- **Équipe responsable** : [Détails de contact ou Slack]
 
 ---
